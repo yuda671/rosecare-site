@@ -1,0 +1,161 @@
+/* ============================================
+   RoseCare Advocacy — brand stylesheet
+   Palette: Peach #FBE9DD | Dark Sage #3F4736
+   Type: Cormorant (display) + Outfit (body)
+   ============================================ */
+
+:root {
+  --peach: #FBE9DD;
+  --peach-light: #FDF6F0;
+  --sage: #3F4736;
+  --sage-mid: #6B7361;
+  --sage-soft: #E9EDE4;
+  --rose: #C97B5D;
+  --ink: #2A2E24;
+  --white: #FFFFFF;
+  --max: 1100px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+body {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--ink);
+  background: var(--peach-light);
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+h1, h2, h3 { font-family: 'Cormorant', Georgia, serif; color: var(--sage); line-height: 1.15; font-weight: 600; }
+h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+h3 { font-size: 1.45rem; }
+a { color: var(--rose); }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+section { padding: 84px 0; }
+
+.eyebrow {
+  font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--rose); font-weight: 500; margin-bottom: 14px;
+}
+
+/* ── Nav ── */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(253, 246, 240, 0.94); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--peach);
+}
+.nav-inner { max-width: var(--max); margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo svg { flex: none; }
+.nav-name { font-family: 'Cormorant', serif; font-size: 1.35rem; font-weight: 600; color: var(--sage); }
+.nav-name em { font-style: normal; color: var(--rose); }
+nav ul { display: flex; gap: 26px; list-style: none; align-items: center; }
+nav ul a { text-decoration: none; color: var(--sage); font-size: 0.92rem; font-weight: 400; }
+nav ul a:hover { color: var(--rose); }
+nav ul a:focus-visible, .btn:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block; background: var(--sage); color: var(--peach-light);
+  padding: 14px 30px; border-radius: 999px; text-decoration: none;
+  font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.95rem;
+  letter-spacing: 0.02em; transition: background 0.2s, transform 0.2s;
+}
+.btn:hover { background: var(--rose); transform: translateY(-1px); }
+.btn-light { background: var(--peach-light); color: var(--sage); }
+.btn-light:hover { background: var(--peach); color: var(--sage); }
+
+/* ── Hero (homepage) ── */
+.hero { background: var(--peach); padding: 110px 0 96px; }
+.hero .line { display: block; opacity: 0; transform: translateY(14px); animation: rise 0.7s forwards; }
+.hero .line:nth-child(2) { animation-delay: 0.35s; }
+.hero .line:nth-child(3) { animation-delay: 0.7s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+.hero-sub { max-width: 560px; margin: 26px 0 34px; font-size: 1.15rem; color: var(--sage-mid); }
+.hero-tag { font-family: 'Cormorant', serif; font-style: italic; font-size: 1.3rem; color: var(--rose); margin-top: 42px; }
+
+/* ── Circles motif divider ── */
+.motif { display: flex; justify-content: center; padding: 0 0 12px; }
+
+/* ── Cards ── */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+.card {
+  background: var(--white); border: 1px solid var(--peach);
+  border-radius: 18px; padding: 34px 28px;
+}
+.card h3 { margin-bottom: 12px; }
+.card p { font-size: 0.98rem; color: var(--sage-mid); }
+
+/* ── Steps ── */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 44px; counter-reset: step; }
+.step { position: relative; padding-top: 14px; }
+.step::before {
+  counter-increment: step; content: counter(step, decimal-leading-zero);
+  font-family: 'Cormorant', serif; font-size: 2.2rem; color: var(--rose); display: block; margin-bottom: 6px;
+}
+.step h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.step p { font-size: 0.94rem; color: var(--sage-mid); }
+
+/* ── Bands ── */
+.band-sage { background: var(--sage); color: var(--peach-light); }
+.band-sage h2, .band-sage h3 { color: var(--peach-light); }
+.band-sage p { color: var(--sage-soft); }
+.band-peach { background: var(--peach); }
+.band-white { background: var(--white); }
+
+/* ── About ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 54px; align-items: center; }
+.about-grid img { width: 100%; border-radius: 18px; display: block; }
+.about-grid p + p { margin-top: 16px; }
+
+/* ── Two audiences ── */
+.audience { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 44px; }
+
+/* ── FAQ ── */
+.faq { max-width: 780px; margin: 40px auto 0; }
+.faq details { border-bottom: 1px solid var(--peach); padding: 18px 0; }
+.faq summary { font-family: 'Cormorant', serif; font-size: 1.3rem; font-weight: 600; color: var(--sage); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.faq summary::after { content: "+"; color: var(--rose); font-size: 1.4rem; font-family: 'Outfit', sans-serif; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding-top: 12px; color: var(--sage-mid); }
+
+/* ── Guide pages ── */
+.guide-hero { background: var(--peach); padding: 76px 0 58px; }
+.guide-hero p.answer { max-width: 720px; margin-top: 20px; font-size: 1.18rem; color: var(--sage); }
+article.guide { max-width: 780px; margin: 0 auto; padding: 64px 24px; }
+article.guide h2 { margin: 44px 0 14px; }
+article.guide p + p { margin-top: 14px; }
+article.guide ul { margin: 14px 0 14px 22px; }
+article.guide li { margin-bottom: 8px; }
+.cta-band { text-align: center; padding: 70px 24px; }
+.cta-band h2 { margin-bottom: 12px; }
+.cta-band p { max-width: 560px; margin: 0 auto 26px; }
+.local-note { font-size: 0.92rem; color: var(--sage-mid); font-style: italic; margin-top: 30px; }
+
+/* ── Footer ── */
+footer { background: var(--sage); color: var(--sage-soft); padding: 54px 0 38px; font-size: 0.9rem; }
+footer .wrap { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 40px; }
+footer h4 { font-family: 'Cormorant', serif; color: var(--peach-light); font-size: 1.15rem; margin-bottom: 12px; font-weight: 600; }
+footer ul { list-style: none; }
+footer li { margin-bottom: 8px; }
+footer a { color: var(--sage-soft); text-decoration: none; }
+footer a:hover { color: var(--peach-light); }
+.foot-bottom { max-width: var(--max); margin: 40px auto 0; padding: 22px 24px 0; border-top: 1px solid rgba(253,246,240,0.15); font-size: 0.8rem; color: rgba(233,237,228,0.6); }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .grid-3, .steps, .audience, .about-grid { grid-template-columns: 1fr; }
+  footer .wrap { grid-template-columns: 1fr; }
+  nav ul { gap: 16px; }
+  nav ul li.nav-hide { display: none; }
+  section { padding: 60px 0; }
+}
