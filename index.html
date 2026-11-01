@@ -68,23 +68,13 @@
     "Medicare navigation"
   ],
   "@id": "https://rosecarenavigation.com/#business",
-  "logo": "https://rosecarenavigation.com/images/logo-seal-96.png",
+  "logo": "https://rosecarenavigation.com/images/logo-seal-144.png",
   "image": "https://rosecarenavigation.com/images/og-cover-beach-2.jpg",
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 26.3683,
-    "longitude": -80.1289
-  },
   "founder": [
     {
       "@type": "Person",
-      "name": "Yehuda",
-      "jobTitle": "Founder & Patient Advocate"
-    },
-    {
-      "@type": "Person",
       "name": "Chaya",
-      "jobTitle": "Co-founder & Care Navigator"
+      "jobTitle": "Co-Founder & Care Navigator"
     }
   ],
   "makesOffer": [
@@ -117,7 +107,7 @@
 <nav class="site-nav">
   <div class="nav-inner">
     <a class="nav-logo" href="/" aria-label="Rose Care Navigation home">
-      <img class="logo-mark" src="/images/logo-seal-96.png" alt="" width="46" height="46">
+      <img class="logo-mark" src="/images/logo-seal-144.png" alt="" width="46" height="46">
       <span class="nav-name-new"><span class="nav-r">R</span><span class="nav-rest">ose Care Navigation</span></span>
     </a>
     <ul>
@@ -190,6 +180,8 @@
     var RATE = 0.75, FADE = 4.5;   // playback speed; crossfade length in real seconds
     var a = document.getElementById('heroVideo'), b = document.getElementById('heroVideo2');
     if (!a || !b) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { a.removeAttribute('autoplay'); a.pause(); }
     var active = a, standby = b, switching = false;
     function front(v){ v.classList.add('is-front'); }      // visible only once it is really playing
     function play(v){
@@ -220,12 +212,11 @@
     setup(a); setup(b);
     // Load the standby copy only after the first is ready (same file, served from cache), so a visit downloads the clip once.
     a.addEventListener('canplaythrough', function once(){ a.removeEventListener('canplaythrough', once); b.preload = 'auto'; b.load(); });
-    play(a);
-    setInterval(tick, 80);
-    document.addEventListener('visibilitychange', function(){ if (!document.hidden && active.paused && !active.ended) play(active); });
+    if (!reduced) { play(a); setInterval(tick, 80); }
+    document.addEventListener('visibilitychange', function(){ if (!reduced && !document.hidden && active.paused && !active.ended) play(active); });
     // Phones (iOS Low Power Mode, data saver) can refuse autoplay and draw a play button. Keep nudging the
     // video until it actually runs: on load, when data arrives, and on the first touch/scroll/tap.
-    function nudge(){ if (active.paused && !active.ended) play(active); }
+    function nudge(){ if (!reduced && active.paused && !active.ended) play(active); }
     ['loadeddata','canplay','canplaythrough'].forEach(function(e){ a.addEventListener(e, nudge); });
     window.addEventListener('pageshow', nudge);
     ['touchstart','touchend','pointerdown','scroll','click','keydown'].forEach(function(e){
@@ -233,9 +224,10 @@
     });
     var tries = 0, retry = setInterval(function(){ nudge(); if (++tries > 20 || !active.paused) clearInterval(retry); }, 1500);
     // Same nudge for the About clip.
-    // About clip: downloads and plays only while it is on screen.
+    // About clip: downloads and plays only while it is on screen. (Runs after the page is parsed — the clip sits below this script.)
+    document.addEventListener('DOMContentLoaded', function(){
     var about = document.querySelector('.about-video'), aboutSeen = false;
-    if (about && 'IntersectionObserver' in window) {
+    if (about && !reduced && 'IntersectionObserver' in window) {
       new IntersectionObserver(function(es){ es.forEach(function(e){
         aboutSeen = e.isIntersecting;
         if (e.isIntersecting) play(about); else about.pause();
@@ -244,6 +236,7 @@
         document.addEventListener(e, function(){ if (aboutSeen && about.paused) play(about); }, { passive: true, capture: true });
       });
     }
+    });
   })();
   </script>
 </header>
@@ -327,7 +320,7 @@
     <div class="founders">
       <!-- YEHUDA'S CARD: hidden per request 7/27/26. Remove style="display:none" to show again. -->
       <div class="founder-card reveal-child" style="display:none">
-        <img class="founder-photo" src="/images/yehuda.jpg" alt="Yehuda, founder of Rose Care Navigation">
+        <img class="founder-photo" src="/images/yehuda.jpg" alt="Yehuda, founder of Rose Care Navigation" loading="lazy">
         <div>
           <h3>Yehuda</h3>
           <div class="founder-role">Founder &amp; Patient Advocate</div>
