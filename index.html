@@ -144,7 +144,7 @@
          (keep the gradient overlay — it comes from .hero-bg::after) -->
     <!-- LIVING ROSE (2026-10-13): care icons gather into a rose. To revert to the photo, swap the two lines below. -->
     <img class="hero-poster" src="/images/hero-poster.webp" fetchpriority="high" alt="" aria-hidden="true" decoding="async">
-    <video id="heroVideo" class="hero-vid" autoplay muted playsinline webkit-playsinline disablepictureinpicture disableremoteplayback poster="/images/hero-poster.webp" preload="auto"><source src="/images/hero-v2.mp4" type="video/mp4"></video>
+    <video id="heroVideo" class="hero-vid" muted playsinline webkit-playsinline disablepictureinpicture disableremoteplayback poster="/images/hero-poster.webp" preload="none"><source src="/images/hero-v2.mp4" type="video/mp4"></video>
     <video id="heroVideo2" class="hero-vid hero-vid-b" muted playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="none" aria-hidden="true"><source src="/images/hero-v2.mp4" type="video/mp4"></video>
     <!-- Alternatives: living-rose animation  <iframe src="/rose-live.html" title="" aria-hidden="true" tabindex="-1" style="border:0;pointer-events:none;"></iframe>
                        photo                  <img src="/images/hero-garden.jpg" alt=""> -->
@@ -181,7 +181,6 @@
     var a = document.getElementById('heroVideo'), b = document.getElementById('heroVideo2');
     if (!a || !b) return;
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) { a.removeAttribute('autoplay'); a.pause(); }
     var active = a, standby = b, switching = false;
     function front(v){ v.classList.add('is-front'); }      // visible only once it is really playing
     function play(v){
@@ -212,7 +211,7 @@
     setup(a); setup(b);
     // Load the standby copy only after the first is ready (same file, served from cache), so a visit downloads the clip once.
     a.addEventListener('canplaythrough', function once(){ a.removeEventListener('canplaythrough', once); b.preload = 'auto'; b.load(); });
-    if (!reduced) { play(a); setInterval(tick, 80); }
+    if (!reduced) { a.preload = 'auto'; play(a); setInterval(tick, 80); }
     document.addEventListener('visibilitychange', function(){ if (!reduced && !document.hidden && active.paused && !active.ended) play(active); });
     // Phones (iOS Low Power Mode, data saver) can refuse autoplay and draw a play button. Keep nudging the
     // video until it actually runs: on load, when data arrives, and on the first touch/scroll/tap.
